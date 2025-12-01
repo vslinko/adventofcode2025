@@ -19,18 +19,18 @@ pub fn part2(input: &str) -> i32 {
     let mut zeros = 0;
 
     for turn in turns {
-        let step = if turn > 0 { -1 } else { 1 };
-        for _ in 0..turn.abs() {
-            pos += step;
-            if pos < 0 {
-                pos = 99;
-            }
-            if pos > 99 {
-                pos = 0;
-            }
-            if pos == 0 {
+        pos += turn;
+        if pos == 0 {
+            zeros += 1;
+        } else if pos > 99 {
+            zeros += pos / 100;
+            pos %= 100;
+        } else if pos < 0 {
+            if pos - turn > 0 {
                 zeros += 1;
             }
+            zeros -= pos / 100;
+            pos = (pos % 100 + 100) % 100;
         }
     }
 
