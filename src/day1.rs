@@ -1,12 +1,10 @@
 pub fn part1(input: &str) -> i32 {
     let turns = parse(&input);
-
     let mut pos = 50;
     let mut zeros = 0;
 
     for turn in turns {
-        pos += turn;
-        pos %= 100;
+        pos = (pos + turn) % 100;
         if pos == 0 {
             zeros += 1;
         }
@@ -16,16 +14,14 @@ pub fn part1(input: &str) -> i32 {
 }
 
 pub fn part2(input: &str) -> i32 {
-    let mut turns = parse(&input);
-
+    let turns = parse(&input);
     let mut pos = 50;
     let mut zeros = 0;
 
-    for turn in turns.iter_mut() {
-        let step = if *turn > 0 { -1 } else { 1 };
-        while *turn != 0 {
+    for turn in turns {
+        let step = if turn > 0 { -1 } else { 1 };
+        for _ in 0..turn.abs() {
             pos += step;
-            *turn += step;
             if pos < 0 {
                 pos = 99;
             }
@@ -43,7 +39,6 @@ pub fn part2(input: &str) -> i32 {
 
 fn parse(input: &str) -> Vec<i32> {
     let mut turns = Vec::with_capacity(4069);
-
     let mut turn = 0;
     let mut mul = 1;
 
