@@ -126,10 +126,7 @@ await (async () => {
   if (!process.env.ADVENT_OF_CODE_SESSION) {
     try {
       process.env.ADVENT_OF_CODE_SESSION = (
-        await fs.readFile(
-          "/Users/vdslinko/qwe/diofant/aoc_session.txt",
-          "utf-8",
-        )
+        await fs.readFile("../../aoc_session.txt", "utf-8")
       ).trim();
     } catch {}
   }
