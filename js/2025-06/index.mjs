@@ -54,8 +54,8 @@ function part2(input) {
   assert(lines.length > 0);
 
   let solution = 0;
-  let math = null;
-  let groups = [];
+  let mathOperation = null;
+  let mathResult = null;
 
   for (let i = 0; i < maxLen + 1; i++) {
     let n = 0;
@@ -67,24 +67,23 @@ function part2(input) {
         n *= 10;
         n += Number(line[i]);
       } else if (line[i] === "*") {
-        math = "*";
+        mathOperation = "*";
+        mathResult = 1;
       } else if (line[i] === "+") {
-        math = "+";
+        mathOperation = "+";
+        mathResult = 0;
       }
     }
 
     if (n > 0) {
-      groups.push(n);
-      continue;
+      if (mathOperation === "*") {
+        mathResult *= n;
+      } else if (mathOperation === "+") {
+        mathResult += n;
+      }
+    } else {
+      solution += mathResult;
     }
-
-    if (math === "*") {
-      solution += groups.reduce((acc, val) => acc * val);
-    } else if (math === "+") {
-      solution += groups.reduce((acc, val) => acc + val);
-    }
-    groups = [];
-    math = null;
   }
 
   return solution;
